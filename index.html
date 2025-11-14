@@ -3,36 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/styles.css">
     <title>Document</title>
 </head>
 <body>
-    <div id="repos">
-
-    </div>
+    <nav>
+        <ul class="navbar">
+            <li><a href="#" id="home">Aidan</a></li>
+            <button class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <span class="links">
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </span>
+        </ul>
+    </nav>
+    <section id="hero">
+        <div class="hero-content">
+            <p class="hero-subtitle">Hi, I'm Aidan!</p>
+            <h1 class="hero-title">I'm here to build</h1>
+            <p class="hero-subtitle">I want to learn as much as possible, and use my knowledge to make cool things</p>
+        </div>
+    </section>
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <img src="assets/menu.png" alt="Menu Screenshot" />
+                <div class="project-card-content">
+                    <h3>Menu</h3>
+                    <p>A concession stand menu with real-time updates via WebSockets</p>
+                    <div class="project-links">
+                        <a href="https://web-production-75df4.up.railway.app/" target="_blank">Live Demo</a>
+                        <a href="https://web-production-75df4.up.railway.app/click" target="_blank">Control Panel</a>
+                        <a href="https://github.com/adfar/vanilla-menu">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="assets/tracker.png" alt="Shift Tracker Screenshot" />
+                <div class="project-card-content">
+                    <h3>Shift Tracker</h3>
+                    <p>A table to keep track of employees' shifts</p>
+                    <div class="project-links">
+                        <a href="https://adfar.github.io/shift-tracker" target="_blank">Live Demo</a>
+                        <a href="https://github.com/adfar/shift-tracker" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="repos">
+        <h2>GitHub</h2>
+    </section>
 </body>
 <script>
     async function loadRepos() {
-        const repos = document.getElementById("repos");
+        const reposSection = document.getElementById("repos");
         try {
-            const response = await fetch("https://api.github.com/users/adfar/repos");
+            const response = await fetch("https://api.github.com/users/adfar/repos?sort=updated");
             const data = await response.json();
-
-            data.forEach(repo => {
-                const item = document.createElement("div");
-                item.innerHTML = `
-                    <div>
-                        <h3>${repo.name}</h3>
-                        <p>${repo.description || "None"}</p>
-                        <a href="${repo.html_url}" target="_blank">View on GitHub</a>
-                    </div>
+            const MAX_REPOS = 6;
+            
+            const repoGrid = document.createElement("div");
+            repoGrid.className = "repo-grid";
+            
+            data.slice(0, MAX_REPOS).forEach(repo => {
+                const repoCard = document.createElement("div");
+                repoCard.className = "repo-card";
+                repoCard.innerHTML = `
+                    <h3>${repo.name}</h3>
+                    <p>${repo.description || "No description available"}</p>
+                    <a href="${repo.html_url}" target="_blank">View on GitHub →</a>
                 `;
-                repos.appendChild(item);
+                repoGrid.appendChild(repoCard);
             });
+            
+            reposSection.appendChild(repoGrid);
         } catch (error) {
             console.error(error);
-            repos.textContent = "Error loading repos";
+            reposSection.innerHTML = "<h2>GitHub</h2><p>Error loading repositories</p>";
         }
     }
     loadRepos();
+
+    function toggleMenu() {
+        const links = document.querySelector('.links');
+        const hamburger = document.querySelector('.hamburger');
+        links.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    }
 </script>
 </html>
