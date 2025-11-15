@@ -384,6 +384,23 @@ section h2::after {
     color: var(--highlight);
 }
 
+/* Contact Section */
+#contact {
+    padding-bottom: 12rem; /* Extra padding to clear the fade */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#contact a {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+.contact-content {
+    display: flex;
+    gap: 2rem;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .hamburger {
@@ -450,21 +467,4 @@ section h2::after {
         gap: 1.5rem;
     }
 
-}
-
-/* Contact Section */
-#contact {
-    padding-bottom: 12rem; /* Extra padding to clear the fade */
-    padding-left: 0;
-    padding-right: 0;
-}
-
-#contact a {
-    text-decoration: none;
-    color: var(--accent);
-}
-
-.contact-content {
-    display: flex;
-    gap: 2rem;
 }
